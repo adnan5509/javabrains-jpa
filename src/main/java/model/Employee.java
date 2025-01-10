@@ -8,6 +8,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -43,6 +45,11 @@ public class Employee {
     private List<PaySlip> paySlips = new ArrayList<>();
 
     @ManyToMany
+    @JoinTable(
+            name = "EMPLOYEE_TEAM_MEMBERSHIPS",
+            joinColumns = @JoinColumn(name = "EMPLOYEE_ID"),
+            inverseJoinColumns = @JoinColumn(name = "TEAM_ID")
+    )
     private List<Team> employeeTeams = new ArrayList<>();
 
     public int getId() {
