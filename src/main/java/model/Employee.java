@@ -8,10 +8,15 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "EMPLOYEE")
@@ -30,6 +35,15 @@ public class Employee {
 
     @Enumerated(EnumType.STRING)
     private EmployeeType employeeType;
+
+    @OneToOne
+    private AccessCard accessCard;
+
+    @OneToMany(mappedBy = "employee")
+    private List<PaySlip> paySlips = new ArrayList<>();
+
+    @ManyToMany
+    private List<Team> employeeTeams = new ArrayList<>();
 
     public int getId() {
         return id;
@@ -71,6 +85,30 @@ public class Employee {
         this.employeeType = employeeType;
     }
 
+    public AccessCard getAccessCard() {
+        return accessCard;
+    }
+
+    public void setAccessCard(final AccessCard accessCard) {
+        this.accessCard = accessCard;
+    }
+
+    public List<PaySlip> getPaySlips() {
+        return paySlips;
+    }
+
+    public void setPaySlips(final List<PaySlip> paySlips) {
+        this.paySlips = paySlips;
+    }
+
+    public List<Team> getEmployeeTeams() {
+        return employeeTeams;
+    }
+
+    public void setEmployeeTeams(final List<Team> employeeTeams) {
+        this.employeeTeams = employeeTeams;
+    }
+
     @Override
     public String toString() {
         return "Employee{" +
@@ -80,5 +118,13 @@ public class Employee {
                 ", dob=" + dob +
                 ", employeeType=" + employeeType +
                 '}';
+    }
+
+    public void addPaySlip(PaySlip paySlip) {
+        this.paySlips.add(paySlip);
+    }
+
+    public void assignTeamToEmployee(Team team) {
+        this.employeeTeams.add(team);
     }
 }
