@@ -6,9 +6,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import java.util.Date;
 
 @Entity
+@NamedQuery(name = "employeeTotalEarnings", query = "SELECT SUM (p.salary) FROM PaySlip p GROUP BY p.employee.id HAVING p.employee.id = :givenEmployee")
 public class PaySlip {
 
     @Id
