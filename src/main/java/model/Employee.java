@@ -2,6 +2,7 @@ package model;
 
 import enums.EmployeeType;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -41,7 +42,7 @@ public class Employee {
     @OneToOne
     private AccessCard accessCard;
 
-    @OneToMany(mappedBy = "employee")
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.REMOVE)
     private List<PaySlip> paySlips = new ArrayList<>();
 
     @ManyToMany

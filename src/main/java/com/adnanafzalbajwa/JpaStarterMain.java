@@ -150,23 +150,29 @@ public class JpaStarterMain {
         entityTransactionSelect.commit();
 
 //        Retrieve
-        Employee fetchedEmployee = entityManager.find(Employee.class, 2);
+        Employee fetchedEmployee = entityManager.find(Employee.class, 3);
         System.out.println(fetchedEmployee);
 
 //        Update
         EntityTransaction entityTransactionUpdate  = entityManager.getTransaction();
         entityTransactionUpdate.begin();
-        fetchedEmployee.setAge(33);
-        fetchedEmployee.setEmployeeType(EmployeeType.CONTRACT);
+        fetchedEmployee.setAge(28);
+        fetchedEmployee.setEmployeeType(EmployeeType.FULL_TIME);
+
+        Team fetchedTeam = entityManager.find(Team.class, 13);
+        fetchedEmployee.assignTeamToEmployee(fetchedTeam);
+
+        fetchedTeam.addTeamMember(fetchedEmployee);
+
         entityManager.persist(fetchedEmployee);
         entityTransactionUpdate.commit();
 
 //        Delete
-//        EntityTransaction entityTransactionDelete = entityManager.getTransaction();
-//        entityTransactionDelete.begin();
-//        Employee employeeToDelete = entityManager.find(Employee.class,3);
-//        entityManager.remove(employeeToDelete);
-//        entityTransactionDelete.commit();
+        EntityTransaction entityTransactionDelete = entityManager.getTransaction();
+        entityTransactionDelete.begin();
+        Employee employeeToDelete = entityManager.find(Employee.class,3);
+        entityManager.remove(employeeToDelete);
+        entityTransactionDelete.commit();
 
         entityManager.close();
         entityManagerFactory.close();
